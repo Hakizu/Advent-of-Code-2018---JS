@@ -2,89 +2,74 @@
 console.time("a")
 
 const fs = require(`fs`)
-const input = fs.readFileSync("./Textinput/input.txt", "utf8")
-const rows = input.split("\n")
+const input = fs.readFileSync("./Textinput/input.txt", "utf8").split("\n")
 
-//   Day 2 ---- part 1
+function getIntegers (row) {
+    const startX = row.indexOf("@") + 2
+    const cleanedRow = row.slice(startX)
+    const startY = cleanedRow.indexOf(`,`) + 1
 
-function cyclingCurrentSplittedRow(inputRow){
-    let observedLetters = {}
-    let j = 0;
-    
-    while (j < inputRow.length) {
+    const startWidth = cleanedRow.indexOf(":") + 2
+    const startLength = cleanedRow.indexOf("x") + 1
 
-        if ([inputRow[j]]in observedLetters) {
-        observedLetters[inputRow[j]] = observedLetters[inputRow[j]]+1
+    const coordinatesX = cleanedRow.slice(0, startY - 1)
+    const coordinatesY = cleanedRow.slice(startY, startWidth - 2)
 
-        } else {
-            observedLetters[inputRow[j]] = 1
-        } 
-        j++
+    const widthX = cleanedRow.slice(startWidth, startLength - 1)
+    const lenghtY = cleanedRow.slice(startLength)
+
+    row = [coordinatesX, coordinatesY, widthX, lenghtY]
+    return row
+}
+function createGrid(gridHeight,gridWidth) {
+    let grid = []
+    for (let i = 0; i < gridHeight; i++) {
+        grid[i] = []
+
+        for (let j = 0; j < gridWidth; j++) {
+            grid[i][j] = []
+            grid[i][j] = 0
+        }
     }
-    return observedLetters
+    return grid
+}
+function registerClaimMatrix(x, y, cutSizeX, cutSizeY) {
+    for (let i = 0; i < cutSizeY; i++) {
+        
+        for (let j = 0; j < cutSizeX; j++) {
+            
+            if (wholeMatrix[x + j][y + i] >= 0) {
+                wholeMatrix[x + j][y + i]++
+            }
+        }
+    }
+} 
+function countClaims(array) {
+    let tracker = 0
+    for (let i = 0; i < array.length; i++) {
+        
+        for (let j = 0; j < array.length; j++) {
+
+            if (array[i][j] >= 2) {
+                tracker++
+            }
+        }
+    }
+    return tracker
 }
 
-let characterTwice = 0;
-let characterThrice = 0;
+const gridWidth = 1000
+const gridHeight = 1000
+let wholeMatrix = createGrid(gridHeight,gridWidth)
 
-for (let i = 0; i < rows.length; i++) {
-
-    let currentRow = rows[i]
-    let splittedCurrentRow = currentRow.split("")
-
-    let countedCharacters = cyclingCurrentSplittedRow(splittedCurrentRow)
-    
-    if (Object.values(countedCharacters).indexOf(2) > -1) {
-        characterTwice++
-    }
-
-    if (Object.values(countedCharacters).indexOf(3) > -1) {
-        characterThrice++
-    }
-}   
-let output = characterTwice * characterThrice
-console.log(`Result: ${output}`)
-console.timeEnd("a")
-
-//  Day 2 -----part 2
-
-let result = 0;
-
-function comparingCurrentSplittedArrays(firstArray, secondArray) {
-    let j = 0
-
-    while (firstArray[j] == secondArray[j]) {
-        j++
-    }
-    
-    if (firstArray[j + 1] == secondArray[j + 1]) {
-
-        firstArray.splice(j, 1)
-        secondArray.splice (j, 1)
-    }
-
-    while (firstArray[j] == secondArray[j]) {
-        j++
-
-        if (j == firstArray.length) {
-          
-            console.log(secondArray)
-            console.log(JSON.stringify(secondArray))
-            result = secondArray
-            return result;
-        } 
-    }
+for (let i = 0; i < input.length; i++) {
+    const currentRow = input[i]
+    const allCoordinates = getIntegers(currentRow)
+    const x = parseInt(allCoordinates[0])
+    const y = parseInt(allCoordinates[1])
+    const cutSizeX = parseInt(allCoordinates[2])
+    const cutSizeY = parseInt(allCoordinates[3])
+    registerClaimMatrix(x, y, cutSizeX, cutSizeY)
 }
 
-for (let i = 0; i < rows.length; i++) {
-
-    for (let e = i + 1; e % rows.length != i; e++) {
-
-        let currentRowOne = rows[i]
-        let currentRowTwo = rows[e % rows.length]
-        let splittedCurrentRowOne = currentRowOne.split("")
-        let splittedCurrentRowTwo = currentRowTwo.split("")
-
-        comparingCurrentSplittedArrays(splittedCurrentRowOne, splittedCurrentRowTwo)
-    }
-}
+console.log(countClaims(wholeMatrix))
