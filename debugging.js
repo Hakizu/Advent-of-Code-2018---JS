@@ -10,7 +10,6 @@ function measuringDistance(xTwo, yTwo, xyArray) {
 
     for (let i = 0; i < xyArray.length; i += 2) {
          
-        //if (infiniteField.includes(i * 2) == false) {   
         let distance = Math.abs(xTwo - xyArray[i]) + Math.abs(yTwo - xyArray[i + 1])
 
             if (distance === shortestDistance) {
