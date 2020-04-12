@@ -40,14 +40,14 @@ const gridHeight = 1000
 const gridWidth = 1000
 let grid = createGrid(gridWidth,gridHeight)            
 
-let xyArray = []            //saveInputs into Array - x = i ; y = i + 1 
+let xyArray = []                                                //saveInputs into Array - x = i ; y = i + 1 
 for (let i = 0; i < input.length; i += 2) {
     xyArray[i] = input[i]
     xyArray[i + 1] = input[i + 1]
 }
 
-let inputID = new Array(xyArray.length / 2).fill(0) //counter für Inputlines
-let infiniteField = []             //inputNr touches border into infinity
+let inputID = new Array(xyArray.length / 2).fill(0)             //counter für Inputlines
+let infiniteField = []                                          //inputNr touches border into infinity
 
 for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid.length; j++) {
@@ -63,7 +63,7 @@ for (let i = 0; i < grid.length; i++) {
         if (xTwo == 0 || yTwo == 0) {
             if (infiniteField.includes(claimedByInput) == false ) {
 
-                infiniteField.push(claimedByInput)     //push infinite Input
+                infiniteField.push(claimedByInput)               //push infinite Input
                 continue
             }              
         }
