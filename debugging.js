@@ -50,8 +50,8 @@ let infiniteField = []                                          //inputNr touche
 
 for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid.length; j++) {
-        let yTwo = grid[i][j]
-        let xTwo = i
+        let xTwo = grid[i][j]
+        let yTwo = i
 
         let claimedByInput = measuringDistance(xTwo, yTwo, xyArray)
 
