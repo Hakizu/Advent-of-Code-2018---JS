@@ -13,7 +13,8 @@ function measuringDistance(xTwo, yTwo, xyArray) {
         let distance = Math.abs(xTwo - xyArray[i]) + Math.abs(yTwo - xyArray[i + 1])
 
             if (distance === shortestDistance) {
-                return null
+                claimedByInput = null
+                continue
             }
 
             if (distance < shortestDistance) {
