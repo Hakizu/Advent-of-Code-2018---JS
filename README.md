@@ -1,4 +1,5 @@
-# hello-world
-Stuff happens i guess
+This repository is only used as a personal showcase for written code
 
-i just came home from work thus i'm too lazy to write something useful
+Allowing me to track my own progress and completed projects - mainly on advent of code
+
+There also some files which contain code examples as a personal reminder
