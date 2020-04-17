@@ -93,38 +93,39 @@ while (remaining) {
                 allowedSteps.includes(currentArray) === false) {
                     partialUnlock++
                     continue
-                }
             }
-            if  (partialUnlock === 0) {
+        }
+        if  (partialUnlock === 0) {
                 allowedSteps.push(currentArray)
                 allowedSteps = allowedSteps.sort()    
-
+                console.log(` allowed ${allowedSteps}`)
             }
-            if (stepArray.length === 0) {
+        if (stepArray.length === 0) {
                 stepOrder.push(currentArray)
                 remaining = false
-            }
+        }
             
-            if  (stepArray.indexOf(passingStep) >= 0 &&
-                (stepArray.indexOf(passingStep) % 2) === 0) {
+        if   (stepArray.indexOf(passingStep) >= 0 &&
+             (stepArray.indexOf(passingStep) % 2) === 0) {
                 
-                let arrayCheck = getIndexChar(stepArray,passingStep)
+            let arrayCheck = getIndexChar(stepArray,passingStep)
+                console.log(`index for ${passingStep} - ${arrayCheck}`)
                 
-                if (arrayCheck.length > 0) {
-                    for (let k = 0; k < arrayCheck.length; k++) { 
-                        if  (arrayCheck[k] % 2 === 0) {
-                            
-                            i = parseInt(arrayCheck) - 2
-                            reset++
-                            break      
-                        }
+            if (arrayCheck.length > 0) {
+                for (let k = 0; k < arrayCheck.length; k++) { 
+                    if  (arrayCheck[k] % 2 === 0) {
+
+                        i = parseInt(arrayCheck) - 2
+                        reset++
+                        console.log("yooo")
+                        break      
                     }
-                }                        
-            }            
-            
+                }
+            }                        
+        }                        
     }            
 }
-   
+
 let output = stepOrder.join("")
 console.log(`${stepOrder}`)
 console.log(`${output}`)
