@@ -15,7 +15,6 @@ function getIndexChar (stepArray, allowedSteps) {
 }
 
 function filterForStep(currentArray, allowedSteps) {
-    console.log(currentArray)
     for (let j = 0; j < allowedSteps.length; j++) {
 
         if  (currentArray.indexOf(allowedSteps[j]) >= 0 &&
@@ -58,11 +57,13 @@ for (let i = 0; i < stepArray.length; i++) {
 let stepOrder = []
 let remaining = true
 let reset = 0
+
 while (remaining) {
     
     for (let i = 0; i < stepArray.length; i += 2) {
         
-        let currentArray = [stepArray[i], stepArray[i + 1]]       
+        let currentArray = [stepArray[i], stepArray[i + 1]]
+        
         let passingStep = filterForStep(currentArray,allowedSteps)
 
         if (passingStep.includes("no match")) {continue} 
@@ -98,18 +99,16 @@ while (remaining) {
         if  (partialUnlock === 0) {
                 allowedSteps.push(currentArray)
                 allowedSteps = allowedSteps.sort()    
-                console.log(` allowed ${allowedSteps}`)
-            }
+        }
         if (stepArray.length === 0) {
                 stepOrder.push(currentArray)
                 remaining = false
         }
             
-        if   (stepArray.indexOf(passingStep) >= 0 &&
-             (stepArray.indexOf(passingStep) % 2) === 0) {
+        if  (stepArray.indexOf(passingStep) >= 0 &&
+                (stepArray.indexOf(passingStep) % 2) === 0) {
                 
             let arrayCheck = getIndexChar(stepArray,passingStep)
-                console.log(`index for ${passingStep} - ${arrayCheck}`)
                 
             if (arrayCheck.length > 0) {
                 for (let k = 0; k < arrayCheck.length; k++) { 
@@ -117,7 +116,6 @@ while (remaining) {
 
                         i = parseInt(arrayCheck) - 2
                         reset++
-                        console.log("yooo")
                         break      
                     }
                 }
@@ -125,7 +123,3 @@ while (remaining) {
         }                        
     }            
 }
-
-let output = stepOrder.join("")
-console.log(`${stepOrder}`)
-console.log(`${output}`)
