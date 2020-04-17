@@ -17,9 +17,7 @@ function getIndexChar (stepArray, allowedSteps) {
 function filterForStep(currentArray, allowedSteps) {
     for (let j = 0; j < allowedSteps.length; j++) {
 
-        if  (currentArray.indexOf(allowedSteps[j]) >= 0 &&
-            (currentArray.indexOf(allowedSteps[j]) % 2) === 0 ) {       
-            
+        if  (currentArray.indexOf(allowedSteps[j]) % 2 === 0 ) {       
             let passingStep = allowedSteps[j]
             return passingStep
         }
@@ -27,10 +25,11 @@ function filterForStep(currentArray, allowedSteps) {
     return "no match"
 }
 
+let inputSorted = input.sort()
 let stepArray = []
 for (let i = 0; i < input.length; i++){
-    
-    let currentString = input[i]
+
+    let currentString = inputSorted[i]
     let stepCharIndex = currentString.indexOf("p") + 2
     let stepChar = currentString[stepCharIndex]
     stepArray.push(stepChar)
@@ -57,69 +56,68 @@ for (let i = 0; i < stepArray.length; i++) {
 let stepOrder = []
 let remaining = true
 let reset = 0
-
 while (remaining) {
-    
-    for (let i = 0; i < stepArray.length; i += 2) {
-        
-        let currentArray = [stepArray[i], stepArray[i + 1]]
-        
-        let passingStep = filterForStep(currentArray,allowedSteps)
+  for (let i = 0; i < stepArray.length; i += 2) {
+      
+      let currentArray = [stepArray[i], stepArray[i + 1]]
+      let passingStep = filterForStep(currentArray,allowedSteps)
 
-        if (passingStep.includes("no match")) {continue} 
-        
-        if  (stepOrder.includes(passingStep) === false) {
-            stepOrder.push(passingStep)
-        }
-        
-        currentArray = currentArray.slice(1)
-        currentArray = currentArray.toString()
-        
-        let index = getIndexChar(stepArray, currentArray) 
-        
-        let startArray = stepArray.slice(0, i)
-        let endArray = stepArray.slice(i + 2)
-        stepArray = startArray.concat(endArray)
-        i -= 2
+      if (passingStep.includes("no match")) {continue} 
+      
+      if  (stepOrder.includes(passingStep) === false) {
+          stepOrder.push(passingStep)
+      }
+      
+      currentArray = currentArray.slice(1)
+      currentArray = currentArray.toString()
+      
+      let index = getIndexChar(stepArray, currentArray) 
+      
+      let startArray = stepArray.slice(0, i)
+      let endArray = stepArray.slice(i + 2)
+      stepArray = startArray.concat(endArray)
+      i -= 2
 
-        if (reset >= 1){
-            i = -2
-            reset = 0
-        } 
-        
-        let partialUnlock = -1
-        for (let k = 0; k < index.length; k++) {
-            
-            if  (index[k] % 2 !== 0 && 
-                allowedSteps.includes(currentArray) === false) {
-                    partialUnlock++
-                    continue
-            }
-        }
-        if  (partialUnlock === 0) {
-                allowedSteps.push(currentArray)
-                allowedSteps = allowedSteps.sort()    
-        }
-        if (stepArray.length === 0) {
-                stepOrder.push(currentArray)
-                remaining = false
-        }
-            
-        if  (stepArray.indexOf(passingStep) >= 0 &&
-                (stepArray.indexOf(passingStep) % 2) === 0) {
-                
-            let arrayCheck = getIndexChar(stepArray,passingStep)
-                
-            if (arrayCheck.length > 0) {
-                for (let k = 0; k < arrayCheck.length; k++) { 
-                    if  (arrayCheck[k] % 2 === 0) {
+      if (reset >= 1){
+          i = -2
+          reset = 0
+      } 
+      
+      let partialUnlock = -1
+      for (let k = 0; k < index.length; k++) {
+          
+          if  (index[k] % 2 !== 0 && 
+              allowedSteps.includes(currentArray) === false) {
+                  partialUnlock++
+                  continue
+          }
+      }
+      if  (partialUnlock === 0) {
+              allowedSteps.push(currentArray)
+              allowedSteps = allowedSteps.sort()    
+      }
+      if (stepArray.length === 0) {
+              stepOrder.push(currentArray)
+              remaining = false
+      }
+          
+      if  (stepArray.indexOf(passingStep) % 2 === 0) {
+              
+          let arrayCheck = getIndexChar(stepArray,passingStep)
+              
+          if (arrayCheck.length > 0) {
+              for (let k = 0; k < arrayCheck.length; k++) { 
+                  if  (arrayCheck[k] % 2 === 0) {
 
-                        i = parseInt(arrayCheck) - 2
-                        reset++
-                        break      
-                    }
-                }
-            }                        
-        }                        
-    }            
+                      i = parseInt(arrayCheck) - 2
+                      reset++
+                      break      
+                  }
+              }
+          }                        
+      }                        
+  }            
 }
+   
+let output = stepOrder.join("")
+console.log(`${output}`)
