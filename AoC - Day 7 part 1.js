@@ -68,55 +68,54 @@ while (remaining) {
           stepOrder.push(passingStep)
       }
       
-      currentArray = currentArray.slice(1)
-      currentArray = currentArray.toString()
-      
-      let index = getIndexChar(stepArray, currentArray) 
-      
-      let startArray = stepArray.slice(0, i)
-      let endArray = stepArray.slice(i + 2)
-      stepArray = startArray.concat(endArray)
-      i -= 2
-
-      if (reset >= 1){
-          i = -2
-          reset = 0
-      } 
-      
-      let partialUnlock = -1
-      for (let k = 0; k < index.length; k++) {
-          
-          if  (index[k] % 2 !== 0 && 
-              allowedSteps.includes(currentArray) === false) {
-                  partialUnlock++
-                  continue
-          }
-      }
-      if  (partialUnlock === 0) {
-              allowedSteps.push(currentArray)
-              allowedSteps = allowedSteps.sort()    
-      }
-      if (stepArray.length === 0) {
-              stepOrder.push(currentArray)
-              remaining = false
-      }
-          
-      if  (stepArray.indexOf(passingStep) % 2 === 0) {
-              
-          let arrayCheck = getIndexChar(stepArray,passingStep)
-              
-          if (arrayCheck.length > 0) {
-              for (let k = 0; k < arrayCheck.length; k++) { 
-                  if  (arrayCheck[k] % 2 === 0) {
-
-                      i = parseInt(arrayCheck) - 2
-                      reset++
-                      break      
-                  }
-              }
-          }                        
-      }                        
-  }            
+        currentArray = currentArray.slice(1)
+        currentArray = currentArray.toString()
+        
+        let index = getIndexChar(stepArray, currentArray) 
+        
+        let startArray = stepArray.slice(0, i)
+        let endArray = stepArray.slice(i + 2)
+        stepArray = startArray.concat(endArray)
+        i -= 2
+        
+        if (reset >= 1){
+            i = -2
+            reset = 0
+        } 
+        
+        let partialUnlock = -1
+        for (let k = 0; k < index.length; k++) {
+            
+            if  (index[k] % 2 !== 0 && 
+                allowedSteps.includes(currentArray) === false) {
+                    partialUnlock++
+                    continue
+            }
+        }
+        if  (partialUnlock === 0) {
+                allowedSteps.push(currentArray)
+                allowedSteps = allowedSteps.sort()    
+        }
+        if (stepArray.length === 0) {
+                stepOrder.push(currentArray)
+                remaining = false
+        }
+            
+        if  (stepArray.indexOf(passingStep) % 2 === 0) {                
+            let arrayCheck = getIndexChar(stepArray,passingStep)
+            
+            if (arrayCheck.length > 0) {
+                for (let k = 0; k < arrayCheck.length; k++) { 
+                    if  (arrayCheck[k] % 2 === 0) {
+                        
+                        i = parseInt(arrayCheck) - 2
+                        reset++
+                        break      
+                    }
+                }
+            }                        
+        }                        
+    }            
 }
    
 let output = stepOrder.join("")
